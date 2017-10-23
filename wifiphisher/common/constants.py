@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 #pylint: skip-file
 import os
+import pyric
+import pyric.pyw
 
 dir_of_executable = os.path.dirname(__file__)
 path_to_project_root = os.path.abspath(
@@ -132,3 +134,24 @@ AP_SEL_ATTRS = 'interface mac_matcher network_manager args'
 
 # Fourway handshake extension
 CONST_A = "Pairwise key expansion"
+
+
+def does_have_mode(interface, mode):
+    """
+    Return whether the provided interface has the mode
+
+    :param interface: Name of the interface
+    :param mode: Mode of operation
+    :type interface: str
+    :type mode: str
+    :return: True if interface has the mode and False otherwise
+    :rtype: bool
+
+    :Example:
+
+    >>> does_have_mode("wlan0", "AP")
+    True
+    """
+    card = pyric.pyw.getcard(interface)
+
+    return mode in pyric.pyw.devmodes(card)
